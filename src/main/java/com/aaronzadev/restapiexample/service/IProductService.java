@@ -7,4 +7,6 @@ public interface IProductService {
 
     Page<Product> getProductsPage(int page, int pageSize);
 
+    Product getProductById(Long productId);
+
 }
