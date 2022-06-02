@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table(name = "products")
 public class Product {
 
+    //TODO rename columns before deploy
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PRODUCTID")

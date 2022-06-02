@@ -6,17 +6,19 @@ public interface IGenericService<T, S> {
 
     Page<T> getAllItems(int page, int pageSize);
 
-    T getSingleItem(Long itemId);
+    T getItemById(Long itemId);
 
-    T saveItem(T entity);
+    T saveItem(T item);
 
-    T updateItem(T entity);
+    T updateItemPartial(Long itemId, T item);
 
-    void deleteItem(Long itemId);
+    T updateItem(Long itemId, T item);
 
-    S mapEntityToDto(T entity);
+    void deleteItem(Long id);
 
-    T mapDtoToEntity(S dto);
+    T mapEntityToDto(S entity);
+
+    S mapDtoToEntity(T dto);
 
 
 }
