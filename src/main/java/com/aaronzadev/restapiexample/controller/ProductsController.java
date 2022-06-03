@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/products")
 public class ProductsController {
 
-    private final IGenericService<ProductDto, Product> productService;
+    private final IGenericService<ProductDto> productService;
 
-    public ProductsController(IGenericService<ProductDto, Product> productService) {
+    public ProductsController(IGenericService<ProductDto> productService) {
         this.productService = productService;
     }
 

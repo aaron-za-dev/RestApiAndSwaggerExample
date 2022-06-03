@@ -2,7 +2,7 @@ package com.aaronzadev.restapiexample.service;
 
 import org.springframework.data.domain.Page;
 
-public interface IGenericService<T, S> {
+public interface IGenericService<T> {
 
     Page<T> getAllItems(int page, int pageSize);
 
@@ -16,9 +16,9 @@ public interface IGenericService<T, S> {
 
     void deleteItem(Long id);
 
-    T mapEntityToDto(S entity);
+    /*T mapEntityToDto(S entity);
 
-    S mapDtoToEntity(T dto);
+    S mapDtoToEntity(T dto);*/
 
 
 }
