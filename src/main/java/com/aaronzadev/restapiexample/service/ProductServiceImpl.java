@@ -1,6 +1,6 @@
 package com.aaronzadev.restapiexample.service;
 
-import com.aaronzadev.restapiexample.dto.ProductDto;
+import com.aaronzadev.restapiexample.dto.product.ProductDto;
 import com.aaronzadev.restapiexample.mappers.IProductMapper;
 import com.aaronzadev.restapiexample.persistence.entity.Product;
 import com.aaronzadev.restapiexample.persistence.repository.IProductRepo;

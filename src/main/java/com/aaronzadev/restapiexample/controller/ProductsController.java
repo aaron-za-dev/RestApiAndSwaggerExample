@@ -1,7 +1,6 @@
 package com.aaronzadev.restapiexample.controller;
 
-import com.aaronzadev.restapiexample.dto.ProductDto;
-import com.aaronzadev.restapiexample.persistence.entity.Product;
+import com.aaronzadev.restapiexample.dto.product.ProductDto;
 import com.aaronzadev.restapiexample.service.IGenericService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.aaronzadev.restapiexample.mappers;
 
-import com.aaronzadev.restapiexample.dto.ProductDto;
+import com.aaronzadev.restapiexample.dto.product.ProductDto;
 import com.aaronzadev.restapiexample.persistence.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,10 +16,11 @@ public interface IProductMapper {
     @Mapping(source = "productDescription", target = "productDescription")
     @Mapping(source = "productPrice", target = "productPrice")
     @Mapping(source = "discontinued", target = "discontinued")*/
+    //@Mapping(source = "category.category", target = "productCategory")
     ProductDto productEntityToDto(Product product);
 
     @Mapping(target = "productId", ignore = true)
-    @Mapping(target = "discontinued", ignore = true)
+    //@Mapping(target = "discontinued", ignore = true)
     Product productDtoToEntity(ProductDto productDto);
 
 

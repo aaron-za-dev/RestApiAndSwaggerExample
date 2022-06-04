@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity()
+@Entity
 @Table(name = "products")
 public class Product {
 
@@ -22,5 +22,9 @@ public class Product {
     private float productPrice;
     @Column(name = "DISCONTINUED")
     private boolean discontinued;
+    @ManyToOne
+    @JoinColumn(name = "CATEGORYID", nullable = false)
+    private Category category;
+
 
 }

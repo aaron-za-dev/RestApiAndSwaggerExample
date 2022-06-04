@@ -1,4 +1,4 @@
-package com.aaronzadev.restapiexample.dto;
+package com.aaronzadev.restapiexample.dto.product;
 
 import lombok.Data;
 
@@ -10,5 +10,6 @@ public class ProductDto {
     private String productDescription;
     private float productPrice;
     private boolean discontinued;
+    private String productCategory;
 
 }
