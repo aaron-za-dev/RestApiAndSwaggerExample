@@ -20,8 +20,12 @@ public class CityEntity {
     @Column(name = "city", nullable = false, length = 50)
     private String cityName;
 
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "city", cascade ={CascadeType.ALL})
     private List<AddressEntity> addresses;
+
+    @ManyToOne
+    @JoinColumn(name = "country")
+    private CountryEntity country;
 
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;

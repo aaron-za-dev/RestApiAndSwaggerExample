@@ -25,7 +25,7 @@ public class AddressEntity {
     @Column(name = "district", nullable = false, length = 20)
     private String district;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private CityEntity city;
     
@@ -34,10 +34,7 @@ public class AddressEntity {
     
     @Column(name = "phone", nullable = false, length = 20)
     private String phone;
-    
-    @Column(name = "location", nullable = false)
-    private Object location;
-    
+
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
 

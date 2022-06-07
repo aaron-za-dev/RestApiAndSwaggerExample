@@ -17,7 +17,7 @@ public class CountryEntity {
     @Column(name = "country_id", nullable = false)
     private int countryId;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<CityEntity> cities;
 
     @Column(name = "last_update", nullable = false)
