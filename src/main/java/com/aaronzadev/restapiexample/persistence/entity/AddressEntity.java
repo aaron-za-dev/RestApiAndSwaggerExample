@@ -14,7 +14,7 @@ public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id", nullable = false)
-    private int addressId;
+    private Long addressId;
     
     @Column(name = "address", nullable = false, length = 50)
     private String address;
