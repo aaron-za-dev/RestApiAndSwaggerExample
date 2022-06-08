@@ -13,28 +13,29 @@ repositories {
 }
 
 dependencies {
+
 	//Spring boot basic setup
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	//H2 database
-	runtimeOnly 'com.h2database:h2'
+	//MySqlServer driver
+	runtimeOnly 'mysql:mysql-connector-java'
 
-	//Lombok configuration
+	//Lombok dependencies
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	//Spring doc and swagger confi
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
-
-	//Model mapper (transform entities to dtos)
-	//implementation 'org.modelmapper:modelmapper:3.1.0'
+	//Mapstruct (mapper) dependencies
 	implementation 'org.mapstruct:mapstruct:1.5.0.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.0.Final'
 
+	//SpringDoc and swagger dependencies
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+
 	//Testing
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 tasks.named('test') {
