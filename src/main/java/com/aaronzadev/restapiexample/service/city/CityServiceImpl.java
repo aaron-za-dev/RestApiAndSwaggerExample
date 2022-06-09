@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CityServiceImpl implements ICityService {
 
-    private final ICityRepo cityRepo;
+    /*private final ICityRepo cityRepo;
 
     @Autowired
     public CityServiceImpl(ICityRepo cityRepo) {
@@ -47,5 +47,5 @@ public class CityServiceImpl implements ICityService {
     @Override
     public void deleteItem(Long id) {
         cityRepo.deleteById(id);
-    }
+    }*/
 }
