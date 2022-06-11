@@ -9,8 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ICountryMapper {
 
-    //ICountryMapper INSTANCE = Mappers.getMapper(ICountryMapper.class);
-
     @Mapping(target = "countryId", ignore = true)
     @Mapping(target = "countryName", source = "countryName")
     @Mapping(target = "cities", ignore = true)
