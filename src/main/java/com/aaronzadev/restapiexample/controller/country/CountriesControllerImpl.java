@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/api/v1/countries")
 public class CountriesControllerImpl implements ICountryController {
@@ -33,7 +35,7 @@ public class CountriesControllerImpl implements ICountryController {
 
     @Override
     @PostMapping(value = "/")
-    public CountryOutDto saveItem(@RequestBody CountryInDto countryInDto) {
+    public CountryOutDto saveItem(@Valid @RequestBody CountryInDto countryInDto) {
         return countryService.saveItem(countryInDto);
     }
 

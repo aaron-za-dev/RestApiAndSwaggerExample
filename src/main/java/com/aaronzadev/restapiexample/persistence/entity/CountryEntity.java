@@ -3,6 +3,8 @@ package com.aaronzadev.restapiexample.persistence.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -16,7 +18,9 @@ public class CountryEntity {
     @Column(name = "country_id", nullable = false)
     private Long countryId;
 
-    @Column(name = "country", nullable = false)
+    @NotEmpty(message = "Country name is mandatory")
+    @Size(min = 4, max = 50, message = "Country name must be between 4 and 50 characters")
+    @Column(name = "country", length = 50, nullable = false)
     private String countryName;
 
     //For bidirectional relationship
@@ -29,7 +33,7 @@ public class CountryEntity {
     @JoinColumn(name = "country_id")
     private List<CityEntity> cities;
 
-    @Column(name = "last_update", nullable = false)
+    @Column(name = "last_update", nullable = false, insertable = false)
     //@Column(name = "last_update", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;
 
