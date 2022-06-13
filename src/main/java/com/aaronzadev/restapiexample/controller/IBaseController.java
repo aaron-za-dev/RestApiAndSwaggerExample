@@ -2,14 +2,17 @@ package com.aaronzadev.restapiexample.controller;
 
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 
 public interface IBaseController<T, S> {
 
     //get all
-    Page<T> getPage(int page, int pageSize);
+    ResponseEntity<Page<T>> getPage(int page, int pageSize);
+
+    //Page<T> getPage(int page, int pageSize);
 
     //get single by id
-    T getById(Long itemId);
+    ResponseEntity<T> getById(Long itemId);
 
     //post
     T saveItem(S item);

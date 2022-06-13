@@ -1,8 +1,9 @@
 package com.aaronzadev.restapiexample.service.country;
 
-import com.aaronzadev.restapiexample.dto.country.CountryInDto;
-import com.aaronzadev.restapiexample.dto.country.CountryOutDto;
-import com.aaronzadev.restapiexample.mappers.country.ICountryMapper;
+import com.aaronzadev.restapiexample.exceptions.RecordNotFoundException;
+import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
+import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
+import com.aaronzadev.restapiexample.service.mappers.country.ICountryMapper;
 import com.aaronzadev.restapiexample.persistence.entity.CountryEntity;
 import com.aaronzadev.restapiexample.persistence.repository.ICountryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class CountryServiceImpl implements ICountryService{
     public CountryOutDto getItemById(Long itemId) {
         return countryRepo.findById(itemId)
                           .map(countryMapper::mapToOutDto)
-                          .orElse(new CountryOutDto(0l, "", ""));//countryRepo.findById(itemId).orElse(new CountryEntity());
+                          .orElseThrow(() -> new RecordNotFoundException("Country with ID: ".concat(String.valueOf(itemId)).concat(" not found!")));
     }
 
     @Override //TODO check if exists before perform save

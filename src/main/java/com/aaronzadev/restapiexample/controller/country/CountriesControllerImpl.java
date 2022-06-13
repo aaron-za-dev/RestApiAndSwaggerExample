@@ -1,11 +1,13 @@
 package com.aaronzadev.restapiexample.controller.country;
 
-import com.aaronzadev.restapiexample.dto.country.CountryInDto;
-import com.aaronzadev.restapiexample.dto.country.CountryOutDto;
-import com.aaronzadev.restapiexample.persistence.entity.CountryEntity;
+import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
+import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.service.country.ICountryService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,14 +25,15 @@ public class CountriesControllerImpl implements ICountryController {
 
     @Override
     @GetMapping(value = "/")
-    public Page<CountryOutDto> getPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
-        return countryService.getAllItems(page, pageSize);
+    public ResponseEntity<Page<CountryOutDto>> getPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
+        //return countryService.getAllItems(page, pageSize);
+        return ResponseEntity.ok(countryService.getAllItems(page, pageSize));
     }
 
     @Override
     @GetMapping(value = "/{countryId}")
-    public CountryOutDto getById(@PathVariable Long countryId) {
-        return countryService.getItemById(countryId);
+    public ResponseEntity<CountryOutDto> getById(@PathVariable Long countryId) {
+        return new ResponseEntity<CountryOutDto>(countryService.getItemById(countryId), HttpStatus.OK);
     }
 
     @Override
