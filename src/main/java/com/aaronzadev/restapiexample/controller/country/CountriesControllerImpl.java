@@ -3,7 +3,6 @@ package com.aaronzadev.restapiexample.controller.country;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.service.country.ICountryService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -26,14 +25,13 @@ public class CountriesControllerImpl implements ICountryController {
     @Override
     @GetMapping(value = "/")
     public ResponseEntity<Page<CountryOutDto>> getPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
-        //return countryService.getAllItems(page, pageSize);
         return ResponseEntity.ok(countryService.getAllItems(page, pageSize));
     }
 
     @Override
     @GetMapping(value = "/{countryId}")
     public ResponseEntity<CountryOutDto> getById(@PathVariable Long countryId) {
-        return new ResponseEntity<CountryOutDto>(countryService.getItemById(countryId), HttpStatus.OK);
+        return new ResponseEntity<>(countryService.getItemById(countryId), HttpStatus.OK);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class CountriesControllerImpl implements ICountryController {
     @Override
     @PatchMapping(value = "/{countryId}")
     public CountryOutDto partialUpdate(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
-        return countryService.updateItemPartial(countryId, countryInDto);
+        throw new UnsupportedOperationException("This operation is not supported");
     }
 
     @Override

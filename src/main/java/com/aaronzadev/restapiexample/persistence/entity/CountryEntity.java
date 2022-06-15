@@ -1,5 +1,6 @@
 package com.aaronzadev.restapiexample.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,14 +25,14 @@ public class CountryEntity {
     private String countryName;
 
     //For bidirectional relationship
-    /*@OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference()
-    private List<CityEntity> cities;*/
-
-    //For unidirectional relationship
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "country_id")
+    @OneToMany(mappedBy = "country", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<CityEntity> cities;
+
+    /*For unidirectional relationship
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_id")
+    private List<CityEntity> cities;*/
 
     @Column(name = "last_update", nullable = false, insertable = false)
     //@Column(name = "last_update", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

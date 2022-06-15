@@ -3,9 +3,9 @@ package com.aaronzadev.restapiexample.service.country;
 import com.aaronzadev.restapiexample.exceptions.RecordNotFoundException;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
-import com.aaronzadev.restapiexample.service.mappers.country.ICountryMapper;
 import com.aaronzadev.restapiexample.persistence.entity.CountryEntity;
 import com.aaronzadev.restapiexample.persistence.repository.ICountryRepo;
+import com.aaronzadev.restapiexample.service.mappers.country.ICountryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,29 +34,43 @@ public class CountryServiceImpl implements ICountryService{
     public CountryOutDto getItemById(Long itemId) {
         return countryRepo.findById(itemId)
                           .map(countryMapper::mapToOutDto)
-                          .orElseThrow(() -> new RecordNotFoundException("Country with ID: ".concat(String.valueOf(itemId)).concat(" not found!")));
+                          .orElseThrow(() -> new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists")));
     }
 
     @Override //TODO check if exists before perform save
     public CountryOutDto saveItem(CountryInDto item) {
         CountryEntity mapped = countryMapper.mapToEntity(item);
-        return countryMapper.mapToOutDto(countryRepo.save(mapped));//countryRepo.save(item);
+        return countryMapper.mapToOutDto(countryRepo.save(mapped));
     }
 
     @Override
     public CountryOutDto updateItemPartial(Long itemId, CountryInDto item) {
-        CountryEntity mapped = countryMapper.mapToEntity(item);
-        return countryMapper.mapToOutDto(countryRepo.save(mapped));//countryRepo.save(item);
+        throw new UnsupportedOperationException("This operation is not supported");
     }
 
     @Override
     public CountryOutDto updateItem(Long itemId, CountryInDto item) {
-        CountryEntity mapped = countryMapper.mapToEntity(item);
-        return countryMapper.mapToOutDto(countryRepo.save(mapped));//countryRepo.save(item);
+
+        CountryEntity mapped = countryMapper.mapToEntity(itemId, item);
+
+        CountryEntity saved = countryRepo.findById(itemId).orElseThrow(() -> new RecordNotFoundException(""));
+
+        if (!saved.equals(mapped)){
+            return countryMapper.mapToOutDto(countryRepo.save(mapped));
+        }
+        else {
+            return countryMapper.mapToOutDto(saved);
+        }
+
     }
 
     @Override
-    public void deleteItem(Long id) {
-        countryRepo.deleteById(id);
+    public void deleteItem(Long itemId) {
+        if (countryRepo.existsById(itemId)){
+            countryRepo.deleteById(itemId);
+        }
+        else {
+            throw new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists"));
+        }
     }
 }

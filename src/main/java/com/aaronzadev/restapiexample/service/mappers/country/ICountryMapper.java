@@ -15,6 +15,12 @@ public interface ICountryMapper {
     @Mapping(target = "lastUpdate", expression = "java(new java.sql.Timestamp(new java.util.Date().getTime()))")
     CountryEntity mapToEntity(CountryInDto countryInDto);
 
+    @Mapping(target = "countryId", source = "id")
+    @Mapping(target = "countryName", source = "countryInDto.countryName")
+    @Mapping(target = "cities", ignore = true)
+    @Mapping(target = "lastUpdate", expression = "java(new java.sql.Timestamp(new java.util.Date().getTime()))")
+    CountryEntity mapToEntity(Long id, CountryInDto countryInDto);
+
     CountryOutDto mapToOutDto(CountryEntity countryEntity);
 
 }
