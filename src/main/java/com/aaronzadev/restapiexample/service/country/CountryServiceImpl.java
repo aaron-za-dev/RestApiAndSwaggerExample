@@ -51,16 +51,13 @@ public class CountryServiceImpl implements ICountryService{
     @Override
     public CountryOutDto updateItem(Long itemId, CountryInDto item) {
 
+        if(!countryRepo.existsById(itemId)){
+            throw new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists"));
+        }
+
         CountryEntity mapped = countryMapper.mapToEntity(itemId, item);
 
-        CountryEntity saved = countryRepo.findById(itemId).orElseThrow(() -> new RecordNotFoundException(""));
-        //TODO this can be simplified
-        if (!saved.equals(mapped)){
-            return countryMapper.mapToOutDto(countryRepo.save(mapped));
-        }
-        else {
-            return countryMapper.mapToOutDto(saved);
-        }
+        return countryMapper.mapToOutDto(countryRepo.save(mapped));
 
     }
 

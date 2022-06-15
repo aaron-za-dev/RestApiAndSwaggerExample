@@ -34,8 +34,7 @@ public class CountryEntity {
     @JoinColumn(name = "country_id")
     private List<CityEntity> cities;*/
 
-    @Column(name = "last_update", nullable = false, insertable = false)
-    //@Column(name = "last_update", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;
 
 }
