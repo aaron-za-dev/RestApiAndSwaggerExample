@@ -5,7 +5,6 @@ import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.service.country.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,7 @@ public class CountriesControllerImpl implements ICountryController {
     @Override
     @GetMapping(value = "/{countryId}")
     public ResponseEntity<CountryOutDto> getById(@PathVariable Long countryId) {
-        return new ResponseEntity<>(countryService.getItemById(countryId), HttpStatus.OK);
+        return ResponseEntity.ok(countryService.getItemById(countryId));
     }
 
     @Override
@@ -42,13 +41,13 @@ public class CountriesControllerImpl implements ICountryController {
 
     @Override
     @PatchMapping(value = "/{countryId}")
-    public CountryOutDto partialUpdate(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
+    public CountryOutDto updateItemPartially(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
         throw new UnsupportedOperationException("This operation is not supported");
     }
 
     @Override
     @PutMapping(value = "/{countryId}")
-    public CountryOutDto completeUpdate(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
+    public CountryOutDto updateItem(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
         return countryService.updateItem(countryId, countryInDto);
     }
 

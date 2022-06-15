@@ -18,10 +18,10 @@ public interface IBaseController<T, S> {
     T saveItem(S item);
 
     //patch
-    T partialUpdate(Long itemId, S item);
+    T updateItemPartially(Long itemId, S item);
 
     //update
-    T completeUpdate(Long itemId, S item);
+    T updateItem(Long itemId, S item);
 
     //delete
     void deleteItem(Long itemId);
