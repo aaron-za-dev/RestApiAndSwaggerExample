@@ -25,7 +25,7 @@ public class CountryServiceImpl implements ICountryService{
     }
 
     @Override
-    public Page<CountryOutDto> getAllItems(int page, int pageSize) {
+    public Page<CountryOutDto> getPagedItems(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         return countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);//countryRepo.findAll(pageable);
     }
@@ -37,14 +37,14 @@ public class CountryServiceImpl implements ICountryService{
                           .orElseThrow(() -> new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists")));
     }
 
-    @Override //TODO check if exists before perform save
+    @Override
     public CountryOutDto saveItem(CountryInDto item) {
         CountryEntity mapped = countryMapper.mapToEntity(item);
         return countryMapper.mapToOutDto(countryRepo.save(mapped));
     }
 
     @Override
-    public CountryOutDto updateItemPartial(Long itemId, CountryInDto item) {
+    public CountryOutDto updateItemPartially(Long itemId, CountryInDto item) {
         throw new UnsupportedOperationException("This operation is not supported");
     }
 
@@ -54,7 +54,7 @@ public class CountryServiceImpl implements ICountryService{
         CountryEntity mapped = countryMapper.mapToEntity(itemId, item);
 
         CountryEntity saved = countryRepo.findById(itemId).orElseThrow(() -> new RecordNotFoundException(""));
-
+        //TODO this can be simplified
         if (!saved.equals(mapped)){
             return countryMapper.mapToOutDto(countryRepo.save(mapped));
         }
@@ -66,11 +66,9 @@ public class CountryServiceImpl implements ICountryService{
 
     @Override
     public void deleteItem(Long itemId) {
-        if (countryRepo.existsById(itemId)){
-            countryRepo.deleteById(itemId);
-        }
-        else {
+        if (!countryRepo.existsById(itemId)){
             throw new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists"));
         }
+        countryRepo.deleteById(itemId);
     }
 }

@@ -7,21 +7,21 @@ import org.springframework.http.ResponseEntity;
 public interface IBaseController<T, S> {
 
     //get all
-    ResponseEntity<Page<T>> getPage(int page, int pageSize);
+    ResponseEntity<Page<T>> getPagedItems(int page, int pageSize);
 
     //Page<T> getPage(int page, int pageSize);
 
     //get single by id
-    ResponseEntity<T> getById(Long itemId);
+    ResponseEntity<T> getItemById(Long itemId);
 
     //post
-    T saveItem(S item);
+    ResponseEntity<T> saveItem(S item);
 
     //patch
-    T updateItemPartially(Long itemId, S item);
+    ResponseEntity<T> updateItemPartially(Long itemId, S item);
 
     //update
-    T updateItem(Long itemId, S item);
+    ResponseEntity<T> updateItem(Long itemId, S item);
 
     //delete
     void deleteItem(Long itemId);

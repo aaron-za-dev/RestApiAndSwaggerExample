@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/api/v1/countries")
@@ -23,36 +24,37 @@ public class CountriesControllerImpl implements ICountryController {
 
     @Override
     @GetMapping(value = "/")
-    public ResponseEntity<Page<CountryOutDto>> getPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
-        return ResponseEntity.ok(countryService.getAllItems(page, pageSize));
+    public ResponseEntity<Page<CountryOutDto>> getPagedItems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(countryService.getPagedItems(page, pageSize));
     }
 
     @Override
     @GetMapping(value = "/{countryId}")
-    public ResponseEntity<CountryOutDto> getById(@PathVariable Long countryId) {
+    public ResponseEntity<CountryOutDto> getItemById(@PathVariable Long countryId) {
         return ResponseEntity.ok(countryService.getItemById(countryId));
     }
 
     @Override
     @PostMapping(value = "/")
-    public CountryOutDto saveItem(@Valid @RequestBody CountryInDto countryInDto) {
-        return countryService.saveItem(countryInDto);
+    public ResponseEntity<CountryOutDto> saveItem(@Valid @RequestBody CountryInDto countryInDto) {
+        final CountryOutDto countrySaved =  countryService.saveItem(countryInDto);
+        return ResponseEntity.created(URI.create("/api/v1/countries/"+countrySaved.countryId())).body(countrySaved);
     }
 
     @Override
     @PatchMapping(value = "/{countryId}")
-    public CountryOutDto updateItemPartially(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
+    public ResponseEntity<CountryOutDto> updateItemPartially(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
         throw new UnsupportedOperationException("This operation is not supported");
     }
 
     @Override
     @PutMapping(value = "/{countryId}")
-    public CountryOutDto updateItem(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
-        return countryService.updateItem(countryId, countryInDto);
+    public ResponseEntity<CountryOutDto> updateItem(@PathVariable Long countryId, @RequestBody CountryInDto countryInDto) {
+        return ResponseEntity.ok(countryService.updateItem(countryId, countryInDto));
     }
 
     @Override
-    @DeleteMapping(value = "/{countryId}")
+    @DeleteMapping(value = "/{countryId}") //TODO Can be implement softDelete
     public void deleteItem(@PathVariable Long countryId) {
         countryService.deleteItem(countryId);
     }
