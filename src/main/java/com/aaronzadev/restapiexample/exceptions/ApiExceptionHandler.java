@@ -12,17 +12,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-
-    //@ExceptionHandler({MethodArgumentNotValidException.class})
-    /*protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex);
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }*/
-
-    @Override //TODO finish implementation of this
-    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex);
+        ErrorResponse errorResponse = new ErrorResponse(ex, ex.getBindingResult());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -37,4 +29,5 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(ex);
         return new ResponseEntity<>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
     }
+
 }
