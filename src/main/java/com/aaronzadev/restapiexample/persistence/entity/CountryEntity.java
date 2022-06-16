@@ -6,13 +6,18 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "country")
-public class CountryEntity {
+public class CountryEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,17 +29,36 @@ public class CountryEntity {
     @Column(name = "country", length = 50, nullable = false)
     private String countryName;
 
-    //For bidirectional relationship
-    @OneToMany(mappedBy = "country", cascade = CascadeType.REMOVE)
+    //For bidirectional relationship with cityEntity
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<CityEntity> cities;
-
-    /*For unidirectional relationship
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "country_id")
-    private List<CityEntity> cities;*/
+    private List<CityEntity> cities = new ArrayList();
 
     @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;
 
+    /* //This is the best practice
+    public void addCity(CityEntity city){
+        this.cities.add(city);
+        city.setCountry(this);
+    }
+
+    public void removeCity(CityEntity city){
+        city.setCountry(null);
+        this.cities.remove(city);
+    }
+
+    public void removeCities(){
+        Iterator<CityEntity> cityIterator = this.cities.iterator();
+        while(cityIterator.hasNext()){
+            CityEntity city = cityIterator.next();
+            city.setCountry(null);
+            cityIterator.remove();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "CountryEntity{ countryId: " + countryId + ", countryName=: " + countryName +", lastUpdate: " + lastUpdate +"}";
+    }*/
 }
