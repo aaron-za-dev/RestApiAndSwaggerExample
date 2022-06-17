@@ -27,7 +27,7 @@ public class RestApiApplication {
 						.version(APP_VERSION)
 						.license(new License()
 								.name("Apache 2.0")
-								.url("http://springdoc.org")));
+								.url("https://github.com/aaron-za-dev/RestApiAndSwaggerExample")));
 				/*.externalDocs(new ExternalDocumentation()
 						.description("SpringShop Wiki Documentation")
 						.url("https://springshop.wiki.github.org/docs"));*/

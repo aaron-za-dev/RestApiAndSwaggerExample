@@ -1,15 +1,14 @@
 package com.aaronzadev.restapiexample.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Data
@@ -17,6 +16,7 @@ import java.util.List;
 @Table(name = "country")
 public class CountryEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -31,8 +31,7 @@ public class CountryEntity implements Serializable {
 
     //For bidirectional relationship with cityEntity
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<CityEntity> cities = new ArrayList();
+    private List<CityEntity> cities = new ArrayList<>();
 
     @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;

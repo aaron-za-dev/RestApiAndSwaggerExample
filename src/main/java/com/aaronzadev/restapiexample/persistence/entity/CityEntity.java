@@ -1,18 +1,18 @@
 package com.aaronzadev.restapiexample.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Data
 @Entity
 @Table(name = "city")
 public class CityEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -26,7 +26,6 @@ public class CityEntity implements Serializable {
     //For bidirectional relationship with countryEntity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
-    @JsonBackReference
     private CountryEntity country;
 
     @Column(name = "last_update", nullable = false) //TODO check change for type
