@@ -4,6 +4,9 @@ import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.service.country.ICountryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,10 @@ public class CountriesControllerImpl implements ICountryController {
 
     @Override
     @Operation(summary = "Get all items page to page")
-    @ApiResponses(value = {})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get page of countries", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CountryOutDto.class))}),
+            @ApiResponse(responseCode = "400", description = "*******", content = @Content),
+            @ApiResponse(responseCode = "404", description = "*******", content = @Content) })
     @GetMapping(value = "/")
     public ResponseEntity<Page<CountryOutDto>> getPagedItems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(countryService.getPagedItems(page, pageSize));
