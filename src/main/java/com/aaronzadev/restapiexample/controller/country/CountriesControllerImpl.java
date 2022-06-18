@@ -31,10 +31,7 @@ public class CountriesControllerImpl implements ICountryController {
 
     @Override
     @Operation(summary = "Get all items page to page")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Get page of countries", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CountryOutDto.class))}),
-            @ApiResponse(responseCode = "400", description = "*******", content = @Content),
-            @ApiResponse(responseCode = "404", description = "*******", content = @Content) })
+    @ApiResponses(value = {})
     @GetMapping(value = "/")
     public ResponseEntity<Page<CountryOutDto>> getPagedItems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(countryService.getPagedItems(page, pageSize));
