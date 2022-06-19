@@ -19,7 +19,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/api/v1/countries")
-@Tag(name = "CountryController", description = "All endpoints in the 'country' resource")
+@Tag(name = "CountryController", description = "All endpoints of 'country' resource")
 public class CountriesControllerImpl implements ICountryController {
 
     private final ICountryService countryService;
