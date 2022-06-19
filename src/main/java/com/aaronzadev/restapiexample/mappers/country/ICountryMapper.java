@@ -1,4 +1,4 @@
-package com.aaronzadev.restapiexample.service.mappers.country;
+package com.aaronzadev.restapiexample.mappers.country;
 
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;

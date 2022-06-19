@@ -5,7 +5,7 @@ import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.persistence.entity.CountryEntity;
 import com.aaronzadev.restapiexample.persistence.repository.ICountryRepo;
-import com.aaronzadev.restapiexample.service.mappers.country.ICountryMapper;
+import com.aaronzadev.restapiexample.mappers.country.ICountryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +26,7 @@ public class CountryServiceImpl implements ICountryService{
 
     @Override
     public Page<CountryOutDto> getPagedItems(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize/*, Sort.by("countryName").descending()*/);
         return countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);//countryRepo.findAll(pageable);
     }
 
