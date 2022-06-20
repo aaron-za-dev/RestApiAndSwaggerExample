@@ -1,5 +1,8 @@
 package com.aaronzadev.restapiexample.service.city;
 
+import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
+import com.aaronzadev.restapiexample.persistence.dto.city.CityInDto;
+import com.aaronzadev.restapiexample.persistence.dto.city.CityOutDto;
 import com.aaronzadev.restapiexample.persistence.entity.CityEntity;
 import com.aaronzadev.restapiexample.persistence.repository.ICityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CityServiceImpl implements ICityService {
 
-    /*private final ICityRepo cityRepo;
+    private final ICityRepo cityRepo;
 
     @Autowired
     public CityServiceImpl(ICityRepo cityRepo) {
@@ -19,33 +22,32 @@ public class CityServiceImpl implements ICityService {
     }
 
     @Override
-    public Page<CityEntity> getAllItems(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
-        return cityRepo.findAll(pageable);
+    public PageOutDto getPagedItems(int page, int pageSize) {
+        return null;
     }
 
     @Override
-    public CityEntity getItemById(Long itemId) {
-        return cityRepo.findById(itemId).orElse(new CityEntity());
+    public CityOutDto getItemById(Long itemId) {
+        return null;
     }
 
     @Override
-    public CityEntity saveItem(CityEntity item) {
-        return cityRepo.save(item);
+    public CityOutDto saveItem(CityInDto item) {
+        return null;
     }
 
     @Override
-    public CityEntity updateItemPartial(Long itemId, CityEntity item) {
-        return cityRepo.save(item);
+    public CityOutDto updateItemPartially(Long itemId, CityInDto item) {
+        return null;
     }
 
     @Override
-    public CityEntity updateItem(Long itemId, CityEntity item) {
-        return cityRepo.save(item);
+    public CityOutDto updateItem(Long itemId, CityInDto item) {
+        return null;
     }
 
     @Override
     public void deleteItem(Long id) {
-        cityRepo.deleteById(id);
-    }*/
+
+    }
 }

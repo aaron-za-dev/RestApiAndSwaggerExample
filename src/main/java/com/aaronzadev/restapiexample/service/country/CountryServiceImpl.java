@@ -3,6 +3,7 @@ package com.aaronzadev.restapiexample.service.country;
 import com.aaronzadev.restapiexample.exceptions.RecordNotFoundException;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
+import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.entity.CountryEntity;
 import com.aaronzadev.restapiexample.persistence.repository.ICountryRepo;
 import com.aaronzadev.restapiexample.mappers.country.ICountryMapper;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,9 +27,10 @@ public class CountryServiceImpl implements ICountryService{
     }
 
     @Override
-    public Page<CountryOutDto> getPagedItems(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize/*, Sort.by("countryName").descending()*/);
-        return countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);//countryRepo.findAll(pageable);
+    public PageOutDto getPagedItems(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<CountryOutDto> pageResult = countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);
+        return countryMapper.mapToPageOutDto(pageResult);
     }
 
     @Override
@@ -67,5 +70,13 @@ public class CountryServiceImpl implements ICountryService{
             throw new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists"));
         }
         countryRepo.deleteById(itemId);
+    }
+
+    @Override
+    public PageOutDto getPagedCountries(int page, int pageSize, String sortingField, String sortingDirection) {
+        Sort sort = (sortingDirection.equals("DESC")) ? Sort.by(sortingField).descending() : Sort.by(sortingField).ascending();
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        Page<CountryOutDto> pageResult = countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);
+        return countryMapper.mapToPageOutDto(pageResult);
     }
 }

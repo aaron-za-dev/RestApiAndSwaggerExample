@@ -6,6 +6,10 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -28,10 +32,34 @@ public class CityEntity implements Serializable {
     @JoinColumn(name = "country_id")
     private CountryEntity country;
 
-    @Column(name = "last_update", nullable = false) //TODO check change for type
+    //For bidirectional relationship with addressEntity
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AddressEntity> addresses = new ArrayList<>();
+
+    @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;
 
-    /*@Override //This is the best practice
+    /*//This is the best practice
+    public void addAddress(AddressEntity address){
+        this.addresses.add(address);
+        address.setCity(this);
+    }
+
+    public void removeAddress(AddressEntity address){
+        address.setCity(null);
+        this.addresses.remove(address);
+    }
+
+    public void removeAddresses(){
+        Iterator<AddressEntity> addressIterator = this.addresses.iterator();
+        while(addressIterator.hasNext()){
+            AddressEntity address = addressIterator.next();
+            address.setCity(null);
+            addressIterator.remove();
+        }
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;

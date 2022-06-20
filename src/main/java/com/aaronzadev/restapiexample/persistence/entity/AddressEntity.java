@@ -13,18 +13,19 @@ public class AddressEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id", nullable = false)
+    @Column(name = "address_id", nullable = false, unique = true)
     private Long addressId;
     
-    @Column(name = "address", nullable = false, length = 50)
+    @Column(name = "address", length = 50, nullable = false)
     private String address;
     
     @Column(name = "address2", length = 50)
     private String address2;
     
-    @Column(name = "district", nullable = false, length = 20)
+    @Column(name = "district", length = 50, nullable = false)
     private String district;
 
+    //For bidirectional relationship with cityEntity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private CityEntity city;
@@ -35,7 +36,24 @@ public class AddressEntity {
     @Column(name = "phone", nullable = false, length = 20)
     private String phone;
 
-    @Column(name = "last_update", nullable = false)
+    @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;
 
+    /*@Override //This is the best practice
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        AddressEntity thisObject = (AddressEntity) object;
+        return Objects.equals(addressId, thisObject.addressId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(addressId);
+    }
+
+    @Override
+    public String toString() {
+        return "AddressEntity{" + "addressId: " + addressId + "address: " + address + "address2: " + address2 + "district: " + district + "postalCode: " + postalCode + "phone: " + phone + "lastUpdate=" + lastUpdate + "}";
+    }*/
 }

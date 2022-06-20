@@ -1,18 +1,18 @@
 package com.aaronzadev.restapiexample.service;
 
-import org.springframework.data.domain.Page;
+import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 
-public interface IBaseService<T, S> {
+public interface IBaseService<T, U> {
 
-    Page<T> getPagedItems(int page, int pageSize);
+    PageOutDto getPagedItems(int page, int pageSize);
 
     T getItemById(Long itemId);
 
-    T saveItem(S item);
+    T saveItem(U item);
 
-    T updateItemPartially(Long itemId, S item);
+    T updateItemPartially(Long itemId, U item);
 
-    T updateItem(Long itemId, S item);
+    T updateItem(Long itemId, U item);
 
     void deleteItem(Long id);
 

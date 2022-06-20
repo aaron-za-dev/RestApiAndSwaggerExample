@@ -1,27 +1,25 @@
 package com.aaronzadev.restapiexample.controller;
 
 
-import org.springframework.data.domain.Page;
+import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import org.springframework.http.ResponseEntity;
 
-public interface IBaseController<T, S> {
+public interface IBaseController<T, U> {
 
     //get all
-    ResponseEntity<Page<T>> getPagedItems(int page, int pageSize);
-
-    //Page<T> getPage(int page, int pageSize);
+    ResponseEntity<PageOutDto> getPagedItems(int page, int pageSize);
 
     //get single by id
     ResponseEntity<T> getItemById(Long itemId);
 
     //post
-    ResponseEntity<T> saveItem(S item);
+    ResponseEntity<T> saveItem(U item);
 
     //patch
-    ResponseEntity<T> updateItemPartially(Long itemId, S item);
+    ResponseEntity<T> updateItemPartially(Long itemId, U item);
 
     //update
-    ResponseEntity<T> updateItem(Long itemId, S item);
+    ResponseEntity<T> updateItem(Long itemId, U item);
 
     //delete
     void deleteItem(Long itemId);
