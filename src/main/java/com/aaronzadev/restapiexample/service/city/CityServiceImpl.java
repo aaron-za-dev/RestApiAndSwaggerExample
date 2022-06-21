@@ -1,8 +1,10 @@
 package com.aaronzadev.restapiexample.service.city;
 
+import com.aaronzadev.restapiexample.mappers.city.ICityMapper;
 import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.dto.city.CityInDto;
 import com.aaronzadev.restapiexample.persistence.dto.city.CityOutDto;
+import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.persistence.entity.CityEntity;
 import com.aaronzadev.restapiexample.persistence.repository.ICityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,19 @@ public class CityServiceImpl implements ICityService {
 
     private final ICityRepo cityRepo;
 
+    private final ICityMapper cityMapper;
+
     @Autowired
-    public CityServiceImpl(ICityRepo cityRepo) {
+    public CityServiceImpl(ICityRepo cityRepo, ICityMapper cityMapper) {
         this.cityRepo = cityRepo;
+        this.cityMapper = cityMapper;
     }
 
     @Override
     public PageOutDto getPagedItems(int page, int pageSize) {
-        return null;
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<CityOutDto> pageResult = cityRepo.findAll(pageable).map(cityMapper::mapToOutDto);
+        return cityMapper.mapToPageOutDto(pageResult);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class CountryEntity implements Serializable {
     private List<CityEntity> cities = new ArrayList<>();
 
     @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp lastUpdate;
+    private Timestamp lastUpdate; //TODO check change Typo
 
     /* //This is the best practice
     public void addCity(CityEntity city){
