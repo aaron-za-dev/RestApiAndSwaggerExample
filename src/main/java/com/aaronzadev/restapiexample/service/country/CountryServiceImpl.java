@@ -5,10 +5,8 @@ import com.aaronzadev.restapiexample.mappers.country.ICountryMapper;
 import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
-import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.entity.CountryEntity;
 import com.aaronzadev.restapiexample.persistence.repository.ICountryRepo;
-import com.aaronzadev.restapiexample.mappers.country.ICountryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +37,7 @@ public class CountryServiceImpl implements ICountryService{
     public CountryOutDto getItemById(Long itemId) {
         return countryRepo.findById(itemId)
                           .map(countryMapper::mapToOutDto)
-                          .orElseThrow(() -> new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists")));
+                          .orElseThrow(() -> new RecordNotFoundException("Country with Key/ID "+ itemId +" not exists"));
     }
 
     @Override
@@ -57,7 +55,7 @@ public class CountryServiceImpl implements ICountryService{
     public CountryOutDto updateItem(Long itemId, CountryInDto item) {
 
         if(!countryRepo.existsById(itemId)){
-            throw new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists"));
+            throw new RecordNotFoundException("Country with Key/ID "+ itemId +" not exists");
         }
 
         CountryEntity mapped = countryMapper.mapToEntity(itemId, item);
@@ -69,7 +67,7 @@ public class CountryServiceImpl implements ICountryService{
     @Override
     public void deleteItem(Long itemId) {
         if (!countryRepo.existsById(itemId)){
-            throw new RecordNotFoundException("Country with Key/ID ".concat(String.valueOf(itemId)).concat(" not exists"));
+            throw new RecordNotFoundException("Country with Key/ID "+ itemId +" not exists");
         }
         countryRepo.deleteById(itemId);
     }
@@ -80,5 +78,14 @@ public class CountryServiceImpl implements ICountryService{
         Pageable pageable = PageRequest.of(page, pageSize, sort);
         Page<CountryOutDto> pageResult = countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);
         return countryMapper.mapToPageOutDto(pageResult);
+    }
+
+    @Override
+    public boolean checkIfExists(Long countryId) {
+        if (countryRepo.existsById(countryId)) {
+            return true;
+        } else {
+            throw new RecordNotFoundException("Country with Key/ID "+ countryId +" not exists");
+        }
     }
 }

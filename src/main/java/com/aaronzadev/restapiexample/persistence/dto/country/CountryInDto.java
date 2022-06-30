@@ -10,3 +10,5 @@ public record CountryInDto(
         @Size(min = 4, max = 50, message = "Country name must be between 4 and 50 characters")
         String countryName
 ) implements Serializable {}
+
+//TODO change Dto to transformations

@@ -38,7 +38,7 @@ public interface ICityMapper {
     @Mapping(target = "nextPage", expression = "java(page.isLast() ? null : page.getNumber() + 2 )")
     @Mapping(target = "pageSize", source = "size")
     @Mapping(target = "totalItems", source = "totalElements")
-    PageOutDto mapToPageOutDto(Page<CityOutDto> page);
+    PageOutDto mapToPageOutDto(Page<CityOutDto> page); //TODO create own mapper
 
 
 }

@@ -1,14 +1,13 @@
 package com.aaronzadev.restapiexample.controller.country;
 
+import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
-import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import com.aaronzadev.restapiexample.service.country.ICountryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,7 @@ public class CountriesControllerImpl implements ICountryController {
     }
 
     @Override
-    @Operation(summary = "Get all items paged")
+    @Operation(summary = "Get all countries paged")
     @ApiResponses(value = {})
     @GetMapping(value = "/")
     public ResponseEntity<PageOutDto> getPagedItems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {

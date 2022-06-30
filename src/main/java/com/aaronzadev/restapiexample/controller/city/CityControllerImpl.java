@@ -3,29 +3,29 @@ package com.aaronzadev.restapiexample.controller.city;
 import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.dto.city.CityInDto;
 import com.aaronzadev.restapiexample.persistence.dto.city.CityOutDto;
-import com.aaronzadev.restapiexample.persistence.entity.CityEntity;
-import com.aaronzadev.restapiexample.service.city.CityServiceImpl;
+import com.aaronzadev.restapiexample.service.city.ICityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/api/v1/cities")
 @Tag(name = "CityController", description = "All endpoints of 'city' resource")
 public class CityControllerImpl implements ICityController{
 
-    private final CityServiceImpl cityService;
+    private final ICityService cityService;
     @Autowired
-    public CityControllerImpl(CityServiceImpl cityService) {
+    public CityControllerImpl(ICityService cityService) {
         this.cityService = cityService;
     }
 
     @Override
-    @Operation(summary = "Get all items paged")
+    @Operation(summary = "Get all cities paged")
     @ApiResponses(value = {})
     @GetMapping(value = "/")
     public ResponseEntity<PageOutDto> getPagedItems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
@@ -33,70 +33,44 @@ public class CityControllerImpl implements ICityController{
     }
 
     @Override
+    @Operation(summary = "Get city by ID")
+    @ApiResponses(value = {})
+    @GetMapping(value = "/{countryId}")
     public ResponseEntity<CityOutDto> getItemById(Long itemId) {
-        return null;
+        return ResponseEntity.ok(cityService.getItemById(itemId));
     }
 
     @Override
-    public ResponseEntity<CityOutDto> saveItem(CityInDto item) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<CityOutDto> updateItemPartially(Long itemId, CityInDto item) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<CityOutDto> updateItem(Long itemId, CityInDto item) {
-        return null;
-    }
-
-    @Override
-    public void deleteItem(Long itemId) {
-
-    }
-
-    /*private final CityServiceImpl cityService;
-
-    @Autowired
-    public CityControllerImpl(CityServiceImpl cityService) {
-        this.cityService = cityService;
-    }
-
-    @Override
-    @GetMapping(value = "/")
-    public Page<CityEntity> getPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
-        return cityService.getAllItems(page, pageSize);
-    }
-
-    @Override
-    @GetMapping(value = "/{cityId}")
-    public CityEntity getById(@PathVariable Long cityId) {
-        return cityService.getItemById(cityId);
-    }
-
-    @Override
+    @Operation(summary = "Save one city")
+    @ApiResponses(value = {})
     @PostMapping(value = "/")
-    public CityEntity saveItem(@RequestBody CityEntity city) {
-        return cityService.saveItem(city);
+    public ResponseEntity<CityOutDto> saveItem(@RequestBody CityInDto item) {
+        final CityOutDto citySaved = cityService.saveItem(item);
+        return ResponseEntity.created(URI.create("/api/v1/cities/"+citySaved.cityId())).body(citySaved);
     }
 
     @Override
+    @Operation(summary = "Partially update a city")
+    @ApiResponses(value = {})
     @PatchMapping(value = "/{cityId}")
-    public CityEntity partialUpdate(@PathVariable Long cityId, @RequestBody CityEntity city) {
-        return cityService.saveItem(city);
+    public ResponseEntity<CityOutDto> updateItemPartially(Long itemId, CityInDto item) {
+        throw new UnsupportedOperationException("This operation is not supported");
     }
 
     @Override
+    @Operation(summary = "Update a city")
+    @ApiResponses(value = {})
     @PutMapping(value = "/{cityId}")
-    public CityEntity completeUpdate(@PathVariable Long cityId, @RequestBody CityEntity city) {
-        return cityService.saveItem(city);
+    public ResponseEntity<CityOutDto> updateItem(Long itemId, CityInDto item) {
+        return ResponseEntity.ok(cityService.updateItem(itemId, item));
     }
 
     @Override
+    @Operation(summary = "Delete a city given ID")
+    @ApiResponses(value = {})
     @DeleteMapping(value = "/{cityId}")
-    public void deleteItem(@PathVariable Long cityId) {
-        cityService.deleteItem(cityId);
-    }*/
+    public void deleteItem(Long itemId) {
+        cityService.deleteItem(itemId);
+    }
+
 }

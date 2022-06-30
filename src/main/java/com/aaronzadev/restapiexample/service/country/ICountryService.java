@@ -9,4 +9,6 @@ public interface ICountryService extends IBaseService<CountryOutDto, CountryInDt
 
     PageOutDto getPagedCountries(int page, int pageSize, String orderField, String orderDirection);
 
+    boolean checkIfExists(Long countryId);
+
 }

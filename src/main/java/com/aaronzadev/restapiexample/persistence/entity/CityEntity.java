@@ -28,7 +28,7 @@ public class CityEntity implements Serializable {
     private String cityName;
 
     //For bidirectional relationship with countryEntity
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
     private CountryEntity country;
 
