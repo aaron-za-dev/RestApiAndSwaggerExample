@@ -1,6 +1,9 @@
 package com.aaronzadev.restapiexample.persistence.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -11,7 +14,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 @Table(name = "city")
 public class CityEntity implements Serializable {
@@ -34,12 +39,13 @@ public class CityEntity implements Serializable {
 
     //For bidirectional relationship with addressEntity
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<AddressEntity> addresses = new ArrayList<>();
 
     @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;
 
-    /*//This is the best practice
+    //This is the best practice
     public void addAddress(AddressEntity address){
         this.addresses.add(address);
         address.setCity(this);
@@ -75,5 +81,5 @@ public class CityEntity implements Serializable {
     @Override
     public String toString() {
         return "CityEntity{" + "cityId: " + cityId + ", cityName: " + cityName + ", lastUpdate: " + lastUpdate + "}";
-    }*/
+    }
 }

@@ -1,12 +1,15 @@
 package com.aaronzadev.restapiexample.persistence.entity;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 @Table(name = "address")
 public class AddressEntity {
@@ -39,7 +42,7 @@ public class AddressEntity {
     @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp lastUpdate;
 
-    /*@Override //This is the best practice
+    @Override //This is the best practice
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
@@ -55,5 +58,5 @@ public class AddressEntity {
     @Override
     public String toString() {
         return "AddressEntity{" + "addressId: " + addressId + "address: " + address + "address2: " + address2 + "district: " + district + "postalCode: " + postalCode + "phone: " + phone + "lastUpdate=" + lastUpdate + "}";
-    }*/
+    }
 }

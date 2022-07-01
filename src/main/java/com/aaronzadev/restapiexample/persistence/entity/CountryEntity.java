@@ -1,6 +1,9 @@
 package com.aaronzadev.restapiexample.persistence.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -10,8 +13,11 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 @Table(name = "country")
 public class CountryEntity implements Serializable {
@@ -31,6 +37,7 @@ public class CountryEntity implements Serializable {
 
     //For bidirectional relationship with cityEntity
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<CityEntity> cities = new ArrayList<>();
 
     @Column(name = "last_update", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -54,10 +61,23 @@ public class CountryEntity implements Serializable {
             city.setCountry(null);
             cityIterator.remove();
         }
-    }
+    }*/
 
     @Override
     public String toString() {
         return "CountryEntity{ countryId: " + countryId + ", countryName=: " + countryName +", lastUpdate: " + lastUpdate +"}";
-    }*/
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        CountryEntity thisObject = (CountryEntity) object;
+        return Objects.equals(countryId, thisObject.countryId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countryId);
+    }
 }
