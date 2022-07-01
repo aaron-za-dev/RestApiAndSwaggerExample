@@ -1,6 +1,6 @@
 package com.aaronzadev.restapiexample.controller.country;
 
-import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
+import com.aaronzadev.restapiexample.persistence.dto.page.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.service.country.ICountryService;

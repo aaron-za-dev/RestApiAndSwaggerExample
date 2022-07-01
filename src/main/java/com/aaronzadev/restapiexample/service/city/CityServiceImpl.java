@@ -2,7 +2,8 @@ package com.aaronzadev.restapiexample.service.city;
 
 import com.aaronzadev.restapiexample.exceptions.RecordNotFoundException;
 import com.aaronzadev.restapiexample.mappers.city.ICityMapper;
-import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
+import com.aaronzadev.restapiexample.mappers.page.IPageMapper;
+import com.aaronzadev.restapiexample.persistence.dto.page.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.dto.city.CityInDto;
 import com.aaronzadev.restapiexample.persistence.dto.city.CityOutDto;
 import com.aaronzadev.restapiexample.persistence.entity.CityEntity;
@@ -22,12 +23,15 @@ public class CityServiceImpl implements ICityService {
 
     private final ICityMapper cityMapper;
 
+    private final IPageMapper pageMapper;
+
     private final ICountryService countryService;
 
     @Autowired
-    public CityServiceImpl(ICityRepo cityRepo, ICityMapper cityMapper, ICountryService countryService) {
+    public CityServiceImpl(ICityRepo cityRepo, ICityMapper cityMapper, IPageMapper pageMapper, ICountryService countryService) {
         this.cityRepo = cityRepo;
         this.cityMapper = cityMapper;
+        this.pageMapper = pageMapper;
         this.countryService = countryService;
     }
 
@@ -35,7 +39,7 @@ public class CityServiceImpl implements ICityService {
     public PageOutDto getPagedItems(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<CityOutDto> pageResult = cityRepo.findAll(pageable).map(cityMapper::mapToOutDto);
-        return cityMapper.mapToPageOutDto(pageResult);
+        return pageMapper.mapToPageOutDto(pageResult);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class CityServiceImpl implements ICityService {
             throw new RecordNotFoundException("City with Key/ID "+ itemId +" not exists");
         }
 
-        CityEntity mapped = cityMapper.mapToEntity(item);
+        CityEntity mapped = cityMapper.mapToEntity(itemId, item);
 
         mapped.setCountry(getCountryParent(item.countryId()));
 

@@ -2,7 +2,8 @@ package com.aaronzadev.restapiexample.service.country;
 
 import com.aaronzadev.restapiexample.exceptions.RecordNotFoundException;
 import com.aaronzadev.restapiexample.mappers.country.ICountryMapper;
-import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
+import com.aaronzadev.restapiexample.mappers.page.IPageMapper;
+import com.aaronzadev.restapiexample.persistence.dto.page.PageOutDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryInDto;
 import com.aaronzadev.restapiexample.persistence.dto.country.CountryOutDto;
 import com.aaronzadev.restapiexample.persistence.entity.CountryEntity;
@@ -19,18 +20,20 @@ public class CountryServiceImpl implements ICountryService{
 
     private final ICountryRepo countryRepo;
     private final ICountryMapper countryMapper;
+    private final IPageMapper pageMapper;
 
     @Autowired
-    public CountryServiceImpl(ICountryRepo countryRepo, ICountryMapper countryMapper) {
+    public CountryServiceImpl(ICountryRepo countryRepo, ICountryMapper countryMapper, IPageMapper pageMapper) {
         this.countryRepo = countryRepo;
         this.countryMapper = countryMapper;
+        this.pageMapper = pageMapper;
     }
 
     @Override
     public PageOutDto getPagedItems(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<CountryOutDto> pageResult = countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);
-        return countryMapper.mapToPageOutDto(pageResult);
+        return pageMapper.mapToPageOutDto(pageResult);
     }
 
     @Override
@@ -77,7 +80,7 @@ public class CountryServiceImpl implements ICountryService{
         Sort sort = (sortingDirection.equals("DESC")) ? Sort.by(sortingField).descending() : Sort.by(sortingField).ascending();
         Pageable pageable = PageRequest.of(page, pageSize, sort);
         Page<CountryOutDto> pageResult = countryRepo.findAll(pageable).map(countryMapper::mapToOutDto);
-        return countryMapper.mapToPageOutDto(pageResult);
+        return pageMapper.mapToPageOutDto(pageResult);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.aaronzadev.restapiexample.controller;
 
 
-import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
+import com.aaronzadev.restapiexample.persistence.dto.page.PageOutDto;
 import org.springframework.http.ResponseEntity;
 
 public interface IBaseController<T, U> {

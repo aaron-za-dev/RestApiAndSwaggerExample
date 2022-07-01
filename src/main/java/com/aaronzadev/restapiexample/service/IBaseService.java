@@ -1,6 +1,6 @@
 package com.aaronzadev.restapiexample.service;
 
-import com.aaronzadev.restapiexample.persistence.dto.PageOutDto;
+import com.aaronzadev.restapiexample.persistence.dto.page.PageOutDto;
 
 public interface IBaseService<T, U> {
 

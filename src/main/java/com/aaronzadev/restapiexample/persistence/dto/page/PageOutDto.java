@@ -1,4 +1,4 @@
-package com.aaronzadev.restapiexample.persistence.dto;
+package com.aaronzadev.restapiexample.persistence.dto.page;
 
 import java.util.List;
 
